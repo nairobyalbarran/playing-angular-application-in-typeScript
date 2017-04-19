@@ -20,11 +20,20 @@ const ELEMENTS: Element[] = [
   template: `
     <h1>{{title}}</h1>
     <ul class="elements">
-      <li *ngFor="let element of elements">
+      <li *ngFor="let element of elements"
+      [class.selected]="element === selectedElement"
+      (click)="onSelect(element)>
         <span class="badge">{{element.id}}</span> {{element.name}}
       </li>
     </ul>
-
+    <div *ngIf="selectedElement">
+          <h2>{{selectedElement.name}} details!</h2>
+          <div><label>id: </label>{{selectedElement.id}}</div>
+          <div>
+            <label>name: </label>
+            <input [(ngModel)]="v.name" placeholder="name"/>
+          </div>
+        </div>
   `,
   styles: [`
     .selected {
@@ -79,4 +88,9 @@ const ELEMENTS: Element[] = [
 export class AppComponent {
   title = 'Radioactive Elements';
   elements = ELEMENTS;
+  selectedElement: Element;
+
+  onSelect(element: Element): void {
+  this.selectedElement = element;
+  }
 }
